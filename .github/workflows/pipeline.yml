@@ -1,24 +1,25 @@
 name: Workflow
 on: [push]
 
-jobs: 
+jobs:
   buildAndTest:
     runs-on: ubuntu-latest
-    steps: 
+    steps:
       - uses: actions/checkout@v2
       - uses: nanasess/setup-php@master
-        with: 
-          php-version: '7.4'
-      - name: Install Dependencies
+        with:
+          php-version: '7.4' 
+      - name: Install dependecies
         run: composer install
-      - name: Install Faker
+      - name: Install  Faker
         run: composer require fzaninotto/faker
       - name: Run chromedriver
         run: nohup $CHROMEWEBDRIVER/chromedriver --url-base=/wd/hub /dev/null 2>&1 &
-      - name: Run tests
-        run: php vendor/bin/codecept run --steps -vvv --xml
-      - name: Publish Test Report
-        uses: mikepenz/action-junit-report@v2
+      - name: Run test cases
+        run:  php vendor/bin/codecept run --steps -vvv --xml
+      - name: JUnit Report Action
+        if: always()
+        uses: mikepenz/action-junit-report@v2.4.2
         with:
           report_paths: 'tests/_output/report.xml'
         
