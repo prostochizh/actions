@@ -18,6 +18,7 @@ jobs:
       - name: Run test cases
         run:  php vendor/bin/codecept run --steps -vvv --xml
       - name: JUnit Report Action
+        if: always()
         uses: mikepenz/action-junit-report@v2.4.2
         with:
           report_paths: 'tests/_output/report.xml'
