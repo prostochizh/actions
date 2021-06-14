@@ -1,0 +1,26 @@
+name: Test
+on: [push]
+
+jobs:
+  buildAndTest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependecies
+        run: composer install
+      - name: Install Faker
+        run: composer require fzaninotto/faker
+      - name: Run test cases
+        run:  php vendor/bin/codecept run functional --steps -vvv
+      - name: JUnit Report Action
+        uses: mikepenz/action-junit-report@v2.4.2
+  acceptance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependecies
+        run: composer install
+      - name: Run chromedriver
+        run: nohup $CHROMEWEBDRIVER/chromedriver --url-base=/wd/hub /dev/null 2>&1 &
+      - name: Run test cases
+        run:  php vendor/bin/codecept run acceptance --steps -vvv
