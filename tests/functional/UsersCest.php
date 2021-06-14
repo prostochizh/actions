@@ -77,12 +77,12 @@ class UsersCest
             [
                 'email' => true,
                 'owner' => false,
-                'errorText' => ['error' => 'Internal Server Error']
+                'errorText' => ['error' => 'email не передан']
             ],
             [
                 'email' => false,
                 'owner' => true,
-                'errorText' => ['error' => 'Что-то пошло не так, проверьте поля: email, name, owner. p.s. учимся на своих ошибках']
+                'errorText' => ['error' => 'email не передан']
             ]
         ];
     }
